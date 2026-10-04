@@ -1,0 +1,18 @@
+'use client';
+import {FormEvent,useEffect,useState} from 'react';
+import {useRouter} from 'next/navigation';
+import {ArrowRight,LoaderCircle,ShieldCheck,Sparkles,UserRound} from 'lucide-react';
+import {request} from '@/lib/api';
+import {useStudentSession} from '@/components/StudentSession';
+
+export function StudentPortalStart(){
+  const router=useRouter();const {activate,profiles,select}=useStudentSession();
+  const [existing,setExisting]=useState<Record<string,any>[]>([]);
+  const [showExisting,setShowExisting]=useState(true);
+  const [fullName,setFullName]=useState('');const [busy,setBusy]=useState(false);const [error,setError]=useState('');
+  useEffect(()=>{request('/students').then((rows:any)=>setExisting(Array.isArray(rows)?rows:[])).catch(()=>{});const timer=window.setTimeout(()=>setShowExisting(false),2000);return()=>window.clearTimeout(timer)},[]);
+  const create=async(e:FormEvent)=>{e.preventDefault();setBusy(true);setError('');try{const student=await request('/students',{method:'POST',body:JSON.stringify({fullName:fullName.trim()})});activate(student);router.push('/application-form')}catch(e:any){setError(e.message||'Could not create your student portal')}finally{setBusy(false)}};
+  const continueExisting=async(profile:Record<string,any>)=>{setBusy(true);setError('');try{const complete=await request(`/students/${profile._id}`);activate(complete);router.push('/application-form')}catch(e:any){setError(e.message||'Could not open this student portal')}finally{setBusy(false)}};
+  const knownIds=new Set(profiles.map(profile=>profile._id));
+  return <main className="portal-start"><div className="portal-start-card"><div className="portal-peacock">🦚</div><span className="portal-kicker"><Sparkles size={13}/> CAREERFLOW BY ADHU PURZE</span><h1>Hello! Welcome to CareerFlow</h1><p className="portal-intro">Create your personal student portal. Your application and placement details will be saved in a separate MongoDB database for your student profile.</p><form onSubmit={create} className="portal-form"><label><span>What is your full name? <b>*</b></span><input autoComplete="name" required maxLength={120} value={fullName} onChange={e=>setFullName(e.target.value)} placeholder="For example, Adhithya"/></label>{error&&<div className="portal-error" role="alert">{error}</div>}<button className="button button-primary portal-submit" disabled={busy}>{busy?<><LoaderCircle size={16} className="spin"/> Creating your portal…</>:<>Create my student portal <ArrowRight size={16}/></>}</button></form>{showExisting&&(existing.filter(profile=>!knownIds.has(profile._id)).length>0||profiles.length>0)&&<div className="saved-portals"><div><b>Continue an existing portal</b><span>Choose a profile on this browser</span></div>{profiles.map(profile=><button key={profile._id} disabled={busy} onClick={()=>{select(profile);router.push('/application-form')}}><span className="saved-avatar">{profile.fullName?.[0]?.toUpperCase()||'S'}</span><span><b>{profile.fullName}</b><small>Saved on this browser</small></span><ArrowRight size={15}/></button>)}{existing.filter(profile=>!knownIds.has(profile._id)).map(profile=><button key={profile._id} disabled={busy} onClick={()=>continueExisting(profile)}><span className="saved-avatar">{profile.fullName?.[0]?.toUpperCase()||'S'}</span><span><b>{profile.fullName}</b><small>Existing student record</small></span><ArrowRight size={15}/></button>)}</div>}<div className="portal-note"><UserRound size={15}/><span>Enter your name to create a student profile and a dedicated database for your placement records.</span></div><div className="portal-storage"><ShieldCheck size={15}/><span>Your records are linked to your own student profile in the connected database.</span></div></div></main>;
+}

@@ -1,0 +1,1 @@
+{"name":"@careerflow/web","version":"1.0.0","private":true,"scripts":{"dev":"next dev","build":"next build","start":"next start"},"dependencies":{"framer-motion":"^12.4.2","lucide-react":"^0.468.0","next":"15.1.6","react":"^19.0.0","react-dom":"^19.0.0"},"devDependencies":{"@types/node":"^22.10.5","@types/react":"^19.0.3","@types/react-dom":"^19.0.3","typescript":"^5.8.3"}}

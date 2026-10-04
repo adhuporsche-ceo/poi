@@ -1,0 +1,20 @@
+{
+  "name": "careerflow-by-adhu-purze",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ],
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "concurrently -n web,api -c blue,green \"pnpm --filter @careerflow/web dev\" \"pnpm --filter @careerflow/api dev\"",
+    "dev:web": "pnpm --filter @careerflow/web dev",
+    "dev:api": "pnpm --filter @careerflow/api dev",
+    "build": "pnpm --filter @careerflow/api build && pnpm --filter @careerflow/web build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.3"
+  }
+}

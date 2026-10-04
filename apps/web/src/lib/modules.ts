@@ -1,0 +1,40 @@
+import {Activity, Award, BookOpen, BriefcaseBusiness, CalendarDays, Code2, FileBadge2, FileCheck2, FileText, FolderGit2, GraduationCap, LayoutDashboard, Lightbulb, MessageCircle, Settings, Sparkles, Target, Trophy, UserRound} from 'lucide-react';
+export const modules=[
+ {name:'Dashboard',href:'/',icon:LayoutDashboard},
+ {name:'Student Profile',href:'/profile',icon:UserRound},
+ {name:'Student Application',href:'/application-form',icon:FileCheck2},
+ {name:'Education',href:'/education',icon:GraduationCap},
+ {name:'Skills',href:'/skills',icon:Sparkles},
+ {name:'Projects',href:'/projects',icon:FolderGit2},
+ {name:'Experience',href:'/experience',icon:BriefcaseBusiness},
+ {name:'Internships',href:'/internships',icon:Activity},
+ {name:'Achievements',href:'/achievements',icon:Trophy},
+ {name:'Certificates',href:'/certificates',icon:FileBadge2},
+ {name:'Resume Builder',href:'/resumes',icon:FileText},
+ {name:'Resume Analyzer',href:'/resumes',icon:Sparkles},
+ {name:'GitHub Analyzer',href:'/github',icon:Code2},
+ {name:'Applications',href:'/applications',icon:BriefcaseBusiness},
+ {name:'Job Tracker',href:'/applications',icon:Target},
+ {name:'Learning Path',href:'/learning',icon:BookOpen},
+ {name:'Mock Interview',href:'/interviews',icon:MessageCircle},
+ {name:'Roadmap',href:'/roadmaps',icon:Lightbulb},
+ {name:'Calendar',href:'/calendar',icon:CalendarDays},
+ {name:'Settings',href:'/settings',icon:Settings}
+];
+export const resourceModules:Record<string,{title:string;singular:string;fields:{name:string;label:string;type?:string;required?:boolean;options?:string[]}[]}>={
+ education:{title:'Education',singular:'education record',fields:[{name:'level',label:'Education level',required:true,options:['10th','12th','Diploma','Undergraduate','Postgraduate']},{name:'institution',label:'Institution',required:true},{name:'field',label:'Field of study'},{name:'startYear',label:'Start year',type:'number'},{name:'endYear',label:'End year',type:'number'},{name:'score',label:'Score / CGPA',type:'number'},{name:'backlogs',label:'Backlogs',type:'number'}]},
+ skills:{title:'Skills',singular:'skill',fields:[{name:'name',label:'Skill name',required:true},{name:'category',label:'Category',options:['Programming Language','Framework','Database','Cloud','DevOps','Soft Skill','Language','Other']},{name:'level',label:'Proficiency',options:['Beginner','Intermediate','Advanced','Expert']},{name:'yearsExperience',label:'Years of experience',type:'number'}]},
+ projects:{title:'Projects',singular:'project',fields:[{name:'name',label:'Project name',required:true},{name:'description',label:'Description',type:'textarea'},{name:'technologies',label:'Technologies (comma separated)'},{name:'githubUrl',label:'GitHub URL'},{name:'liveUrl',label:'Live URL'},{name:'teamSize',label:'Team size',type:'number'},{name:'status',label:'Status',options:['In progress','Completed','On hold']}]},
+ experience:{title:'Experience',singular:'experience record',fields:[{name:'company',label:'Company',required:true},{name:'role',label:'Role'},{name:'description',label:'Description',type:'textarea'},{name:'startDate',label:'Start date',type:'date'},{name:'endDate',label:'End date',type:'date'}]},
+ internships:{title:'Internships',singular:'internship',fields:[{name:'company',label:'Company',required:true},{name:'role',label:'Role'},{name:'description',label:'Description',type:'textarea'},{name:'startDate',label:'Start date',type:'date'},{name:'endDate',label:'End date',type:'date'},{name:'certificateUrl',label:'Certificate URL'}]},
+ certificates:{title:'Certificates',singular:'certificate',fields:[{name:'name',label:'Certificate name',required:true},{name:'organization',label:'Organization'},{name:'issueDate',label:'Issue date',type:'date'},{name:'expiryDate',label:'Expiry date',type:'date'},{name:'fileUrl',label:'PDF URL'}]},
+ achievements:{title:'Achievements',singular:'achievement',fields:[{name:'title',label:'Title',required:true},{name:'type',label:'Type',options:['Hackathon','Competition','Award','Research paper','Publication','Other']},{name:'organization',label:'Organization'},{name:'date',label:'Date',type:'date'},{name:'description',label:'Description',type:'textarea'},{name:'url',label:'Link'}]},
+ applications:{title:'Job applications',singular:'application',fields:[{name:'company',label:'Company',required:true},{name:'role',label:'Role',required:true},{name:'status',label:'Status',options:['Wishlist','Applied','Assessment','Interview','Offer','Rejected']},{name:'appliedDate',label:'Applied date',type:'date'},{name:'interviewDate',label:'Interview date',type:'date'},{name:'jobUrl',label:'Job URL'},{name:'notes',label:'Notes',type:'textarea'}]},
+ resumes:{title:'Resumes',singular:'resume',fields:[{name:'name',label:'Resume name',required:true},{name:'template',label:'Template',options:['Modern','Classic','Minimal']},{name:'score',label:'ATS score',type:'number'},{name:'fileUrl',label:'PDF URL'}]},
+ github:{title:'GitHub repositories',singular:'repository',fields:[{name:'repositoryUrl',label:'Repository URL',required:true},{name:'summary',label:'Notes',type:'textarea'}]},
+ roadmaps:{title:'Learning roadmaps',singular:'roadmap',fields:[{name:'goal',label:'Career goal',required:true},{name:'progress',label:'Progress %',type:'number'}]},
+ interviews:{title:'Interviews',singular:'interview',fields:[{name:'company',label:'Company'},{name:'role',label:'Role'},{name:'type',label:'Interview type',options:['Technical','Behavioral','HR','System Design']},{name:'date',label:'Date',type:'datetime-local'},{name:'score',label:'Score',type:'number'},{name:'feedback',label:'Feedback',type:'textarea'}]},
+ learning:{title:'Learning path',singular:'learning resource',fields:[{name:'title',label:'Resource title',required:true},{name:'goal',label:'Learning goal'},{name:'type',label:'Resource type',options:['Course','Video','Article','Project','Assignment','Other']},{name:'resourceUrl',label:'Resource URL'},{name:'progress',label:'Progress %',type:'number'},{name:'dueDate',label:'Due date',type:'date'},{name:'notes',label:'Notes',type:'textarea'}]},
+ calendar:{title:'Calendar events',singular:'calendar event',fields:[{name:'title',label:'Event title',required:true},{name:'type',label:'Event type',options:['Interview','Deadline','Task','Meeting','Other']},{name:'date',label:'Start date & time',type:'datetime-local',required:true},{name:'endDate',label:'End date & time',type:'datetime-local'},{name:'location',label:'Location'},{name:'notes',label:'Notes',type:'textarea'}]},
+ settings:{title:'Workspace settings',singular:'preference set',fields:[{name:'theme',label:'Appearance',options:['light','dark','system']},{name:'timezone',label:'Time zone'},{name:'weekStartsOn',label:'Week starts on',options:['monday','sunday']},{name:'emailReminders',label:'Email reminders',options:['Enabled','Disabled']}]}
+};

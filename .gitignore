@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.next-vercel-build/
+dist/
+.pnpm-store/
+coverage/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example

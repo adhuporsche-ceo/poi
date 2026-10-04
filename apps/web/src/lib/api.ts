@@ -1,0 +1,2 @@
+export const API=process.env.NEXT_PUBLIC_API_URL||'http://localhost:4000/api';
+export async function request(path:string,init?:RequestInit){const response=await fetch(`${API}${path}`,{...init,headers:{'Content-Type':'application/json',...init?.headers},cache:'no-store'});if(!response.ok){const body=await response.json().catch(()=>({}));throw new Error(body.error||`Request failed (${response.status})`)}return response.status===204?null:response.json()}
