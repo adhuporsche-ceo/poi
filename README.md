@@ -27,15 +27,16 @@ Create the initial student through **Student Profile → Create profile**. The i
 
 ## Production notes
 
-## Deploy both apps to Vercel
+## Deploy to Vercel as a Services project
 
-The web app and Express API are two Vercel projects in this pnpm monorepo:
+Import this repository using Vercel's **Services** preset and choose **Import multi-service project**. The root `vercel.json` defines two services in this one Vercel project:
 
-1. Import this repository into Vercel and create a **web** project with Root Directory `apps/web` and the Next.js framework preset.
-2. Create a second **API** project from the same repository with Root Directory `apps/api`. Keep the Express framework detection and the default output settings; the API exports its Express app for Vercel Functions and starts a local listener only outside Vercel.
-3. Set `NEXT_PUBLIC_API_URL` in the web project's Production, Preview, and Development environments to the API project's HTTPS URL ending in `/api`, for example `https://your-api.vercel.app/api`.
-4. Set `MONGODB_URI` in the API project's environments to the Atlas connection string, and set `CORS_ORIGIN` to the exact web project's HTTPS origin (no path). Keep database credentials out of Git.
-5. Deploy the API first, set its URL in the web project, and redeploy the web project. Verify `https://your-api.vercel.app/api/health` reports a connected database.
+* `api` — Express, rooted at `apps/api`, publicly routed under `/api/*`.
+* `web` — Next.js, rooted at `apps/web`, publicly routed under `/*` after the API rewrite.
+
+The web browser calls the API through the same-origin `/api` path in production. Leave `NEXT_PUBLIC_API_URL` unset in Vercel; the separate `http://localhost:4000/api` default is used for local development. No service binding is required because the browser uses the public API route and the API does not call the web service.
+
+Add `MONGODB_URI` to the Vercel project's Production, Preview, and Development environment variables. Keep database credentials out of Git. `CORS_ORIGIN` is only needed if you configure the frontend to call the API from a different origin; for the default same-origin rewrites, leave it unset. After deploying, verify `/api/health` reports a connected database.
 
 Uploads use small separate requests because Vercel Functions limit request and response payloads; the app sends 512 KB chunks instead of putting a whole proof in one request. Vercel documents a 4.5 MB Function payload ceiling and recommends splitting larger uploads into multiple requests. [Express on Vercel](https://vercel.com/docs/frameworks/backend/express) · [Vercel Function payload limits](https://vercel.com/docs/errors/FUNCTION_PAYLOAD_TOO_LARGE) · [Vercel monorepos](https://vercel.com/docs/monorepos)
 
